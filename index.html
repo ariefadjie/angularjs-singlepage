@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html ng-app="App">
+<head>
+	<title>Angular - Single Page App</title>
+	<base href="/"></base>
+	<link rel="stylesheet" type="text/css" href="/bootstrap/dist/css/bootstrap.min.css">
+	<script type="text/javascript" src="/js/angular.min.js"></script>
+	<script type="text/javascript" src="/js/angular-route.min.js"></script>
+	<script type="text/javascript">
+	//ngasih nama module dengan nama App
+	var App	= angular.module('App', ['ngRoute']);
+
+	//konfigurasi route
+	App.config(function($routeProvider, $locationProvider){
+		$routeProvider
+		.when('/', {
+			templateUrl: 'pages/home.html',
+			controller: 'mainCtrl'
+		})
+		.when('/about', {
+			templateUrl: 'pages/about.html',
+			controller: 'aboutCtrl'
+		})
+		.when('/contact', {
+			templateUrl: 'pages/contact.html',
+			controller: 'contactCtrl'
+		})
+		.otherwise({
+			redirectTo: '/'
+		});
+		//enable HTML5 History API
+		$locationProvider.html5Mode(true);
+	});
+	//buat kontroller dan inject angular skope
+	App.controller('mainCtrl', function($scope){
+		//tamplilkan pesan yang akan ditampilkan di view
+		$scope.message = 'Everyone come and see how good I look!';
+	});
+	App.controller('aboutCtrl', function($scope){
+		//tamplilkan pesan yang akan ditampilkan di view
+		$scope.message = 'Look! I am an about page';
+	});
+	App.controller('contactCtrl', function($scope){
+		//tamplilkan pesan yang akan ditampilkan di view
+		$scope.message = 'Contact us!. Thsis is just a demo page.';
+	});
+
+	</script>
+</head>
+<body>
+	<header>
+		<nav class="navbar navbar-default">
+			<div class="container">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="/">Angular App</a>
+				</div>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="/"><i class="fa fa-home"></i> Home</a></li>
+					<li><a href="/about"><i class="fa fa-shield"></i> About</a></li>
+					<li><a href="/contact"><i class="fa fa-comment"></i> Contact</a></li>
+				</ul>
+			</div>
+		</nav>
+	</header>
+	<div class="container">
+		<!-- main contect and inject view -->
+		<div id="main" ng-controller="mainCtrl">
+			<!-- angular templating -->
+			<div ng-view></div>
+		</div>
+	</div>
+
+</body>
+</html>
